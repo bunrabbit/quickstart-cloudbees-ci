@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Deploys an EKS cluster with CloudBees Core into an existing VPC (qs-1pipqrqia)
+Description: Deploys an EKS cluster with CloudBees CI into an existing VPC (qs-1pipqrqia)
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -25,7 +25,7 @@ Metadata:
           - EKSPublicAccessEndpoint
           - EKSPrivateAccessEndpoint
       - Label:
-          default: CloudBees Core configuration
+          default: CloudBees CI configuration
         Parameters:
           - MasterNodeInstanceType
           - RegularNodeInstanceType
@@ -360,7 +360,7 @@ Resources:
         ConfigSetName: !Ref AWS::StackName
         EKSPrivateAccessEndpoint: !Ref EKSPrivateAccessEndpoint
         EKSPublicAccessCIDRs: !Join [ ',', !Ref 'EKSPublicAccessCIDRs' ]
-        NodeGroupName: "cloudbees-core-masters"
+        NodeGroupName: "cloudbees-ci-masters"
         NodeVolumeSize: !Ref MasterNodeVolumeSize
         CustomAmiId: !Ref CustomAmiId
         KubernetesVersion: !Ref KubernetesVersion
@@ -446,7 +446,7 @@ Resources:
         PrivateSubnet2ID: !Ref PrivateSubnet2ID
         PrivateSubnet3ID: !Ref PrivateSubnet3ID
         ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
-  CloudBeesCoreStack:
+  CloudBeesCIStack:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
@@ -459,9 +459,9 @@ Resources:
         ValueOverrideURL: !Ref ValueOverrideURL
 
 Outputs:
-  CloudBeesCoreURL:
-    Value: !GetAtt CloudBeesCoreStack.Outputs.CloudBeesCoreURL
-    Description: Open this URL to begin using CloudBees Core.
+  CloudBeesCIURL:
+    Value: !GetAtt CloudBeesCIStack.Outputs.CloudBeesCIURL
+    Description: Open this URL to begin using CloudBees CI.
   BastionIP:
     Value: !GetAtt EKSStack.Outputs.BastionIP
-    Description: Bastion host IP address. Log in (via SSH) to retrieve the initial admin password and administer CloudBees Core.
+    Description: Bastion host IP address. Log in (via SSH) to retrieve the initial admin password and administer CloudBees CI.

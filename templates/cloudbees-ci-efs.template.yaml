@@ -32,7 +32,7 @@ Resources:
       Encrypted: true
       FileSystemTags:
       - Key: Name
-        Value: cloudbees-core-efs-filesystem
+        Value: cloudbees-ci-efs-filesystem
       PerformanceMode: generalPurpose
       ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
       ThroughputMode: provisioned

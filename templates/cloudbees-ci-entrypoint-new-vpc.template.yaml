@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Deploys CloudBees Core into a new VPC (qs-1pipqrqip)
+Description: Deploys CloudBees CI into a new VPC (qs-1pipqrqip)
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -27,7 +27,7 @@ Metadata:
           - EKSPublicAccessEndpoint
           - EKSPrivateAccessEndpoint
       - Label:
-          default: CloudBees Core configuration
+          default: CloudBees CI configuration
         Parameters:
           - MasterNodeInstanceType
           - RegularNodeInstanceType
@@ -394,7 +394,7 @@ Resources:
         PublicSubnet2CIDR: !Ref 'PublicSubnet2CIDR'
         PublicSubnet3CIDR: !Ref 'PublicSubnet3CIDR'
         PublicSubnetTag2: "kubernetes.io/role/elb="
-  CloudBeesCoreExistingVPCStack:
+  CloudBeesCIExistingVPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
@@ -451,10 +451,10 @@ Resources:
         QSS3BucketRegion: !Ref QSS3BucketRegion
 
 Outputs:
-  CloudBeesCoreURL:
-    Value: !GetAtt CloudBeesCoreExistingVPCStack.Outputs.CloudBeesCoreURL
-    Description: Open this URL to begin using CloudBees Core.
+  CloudBeesCIURL:
+    Value: !GetAtt CloudBeesCIExistingVPCStack.Outputs.CloudBeesCIURL
+    Description: Open this URL to begin using CloudBees CI.
   BastionIP:
-    Value: !GetAtt CloudBeesCoreExistingVPCStack.Outputs.BastionIP
+    Value: !GetAtt CloudBeesCIExistingVPCStack.Outputs.BastionIP
     Description: Bastion host IP address. Log in (via SSH) to retrieve the initial admin password
-      and administer CloudBees Core.
+      and administer CloudBees CI.

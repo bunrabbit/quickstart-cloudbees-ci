@@ -97,7 +97,7 @@ Resources:
         Subnet3ID: !Ref PrivateSubnet3ID
         NodeInstanceType: !Ref RegularNodeInstanceType
         NumberOfNodes: !Ref NumberOfRegularNodes
-        NodeGroupName: "cloudbees-core-regular-agents"
+        NodeGroupName: "cloudbees-ci-regular-agents"
         NodeVolumeSize: !Ref NodeVolumeSize
         CustomAmiId: !Ref CustomAmiId
         EKSClusterName: !Ref EKSClusterName
@@ -122,7 +122,7 @@ Resources:
         NodeInstanceType3: !Ref SpotNodeInstanceType3
         NodeInstanceType4: !Ref SpotNodeInstanceType4
         NumberOfNodes: !Ref NumberOfSpotNodes
-        NodeGroupName: "cloudbees-core-spot-agents"
+        NodeGroupName: "cloudbees-ci-spot-agents"
         NodeVolumeSize: !Ref NodeVolumeSize
         CustomAmiId: !Ref CustomAmiId
         EKSClusterName: !Ref EKSClusterName
