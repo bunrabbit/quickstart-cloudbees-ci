@@ -1,6 +1,8 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Deploys CloudBees Core into an existing Kubernetes cluster (qs-1pipqrqje)
 
+Metadata: { cfn-lint: { config: { ignore_checks: [E3001,E1019] } } }
+
 Parameters:
   EKSClusterName:
     Type: String

@@ -1,6 +1,8 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Deploys an EFS file system and efs-provisioner (qs-1pipqrqhi)
 
+Metadata: { cfn-lint: { config: { ignore_checks: [E3001] } } }
+
 Parameters:
   EKSClusterName:
     Type: String
