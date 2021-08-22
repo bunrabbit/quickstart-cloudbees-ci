@@ -67,7 +67,7 @@ Resources:
         efsProvisioner.awsRegion: !Ref "AWS::Region"
         efsProvisioner.provisionerName: aws-quickstart/aws-efs
         efsProvisioner.storageClass.name: aws-efs
-        nodeSelector.partition: masters
+        nodeSelector.partition: controllers
 
 Outputs:
   EFSFileSystemID:
