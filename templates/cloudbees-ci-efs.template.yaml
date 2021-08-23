@@ -1,6 +1,8 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Deploys an EFS file system and efs-provisioner (qs-1pipqrqhi)
 
+Metadata: { cfn-lint: { config: { ignore_checks: [E3001] } } }
+
 Parameters:
   EKSClusterName:
     Type: String
@@ -30,7 +32,7 @@ Resources:
       Encrypted: true
       FileSystemTags:
       - Key: Name
-        Value: cloudbees-core-efs-filesystem
+        Value: cloudbees-ci-efs-filesystem
       PerformanceMode: generalPurpose
       ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
       ThroughputMode: provisioned
@@ -65,7 +67,7 @@ Resources:
         efsProvisioner.awsRegion: !Ref "AWS::Region"
         efsProvisioner.provisionerName: aws-quickstart/aws-efs
         efsProvisioner.storageClass.name: aws-efs
-        nodeSelector.partition: masters
+        nodeSelector.partition: controllers
 
 Outputs:
   EFSFileSystemID:

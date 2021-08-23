@@ -1,5 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Deploys CloudBees Core into an existing Kubernetes cluster (qs-1pipqrqje)
+Description: Deploys CloudBees CI into an existing Kubernetes cluster (qs-1pipqrqje)
+
+Metadata: { cfn-lint: { config: { ignore_checks: [E3001,E1019] } } }
 
 Parameters:
   EKSClusterName:
@@ -14,28 +16,26 @@ Conditions:
   ValueOverrideURLExists: !Not [!Equals [ !Ref ValueOverrideURL, '' ]]
 
 Resources:
-  CloudBeesCore:
+  CloudBeesCI:
     Type: "AWSQS::Kubernetes::Helm"
     Properties:
       ClusterID: !Ref EKSClusterName
       Repository: https://charts.cloudbees.com/public/cloudbees
       Chart: cloudbees/cloudbees-core
       #Version: 3.16.1+a3fdb4ae4e87 # uncomment to use something other than latest
-      Name: cloudbees-core
+      Name: cloudbees-ci
       ValueYaml: !Sub |
+        ingress-nginx:
+          Enabled: true
         OperationsCenter:
           Platform: eks
-          Ingress:
-            Class: alb
-            Annotations:
-              alb.ingress.kubernetes.io/scheme: internet-facing
           ExtraConfigMaps:
           - name: cloudbees-referrer
             labels:
               app.kubernetes.io/component: trial-telemetry
             data:
               .cloudbees-referrer.txt: |
-                Core on AWS Quick Start
+                CI on AWS Quick Start
           ExtraVolumes:
           - name: cloudbees-referrer
             configMap:
@@ -58,15 +58,15 @@ Resources:
         - ValueOverrideURLExists
         - !Ref ValueOverrideURL
         - !Ref AWS::NoValue
-  CloudBeesCoreURL:
-    DependsOn: CloudBeesCore
+  CloudBeesCIURL:
+    DependsOn: CloudBeesCI
     Type: "AWSQS::Kubernetes::Get"
     Properties:
       ClusterName: !Ref EKSClusterName
       Namespace: default
-      Name: 'ingress/cjoc'
+      Name: 'service/cloudbees-ci-ingress-nginx-controller'
       JsonPath: '{.status.loadBalancer.ingress[0].hostname}'
 
 Outputs:
-  CloudBeesCoreURL:
-    Value: !Sub "http://${CloudBeesCoreURL.Response}/cjoc"
+  CloudBeesCIURL:
+    Value: !Sub "http://${CloudBeesCIURL.Response}/cjoc"
