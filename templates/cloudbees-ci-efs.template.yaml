@@ -1,8 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Deploys an EFS file system and efs-provisioner (qs-1pipqrqhi)
-
 Metadata: { cfn-lint: { config: { ignore_checks: [E3001] } } }
-
 Parameters:
   EKSClusterName:
     Type: String
@@ -18,13 +16,15 @@ Parameters:
   PrivateSubnet3ID:
     Type: String
     Default: ""
-
+  OIDCIssuer:
+    Type: String
+    Default: ""
+    Description: OIDC Issuer from the EKS stack (without https://)
 Conditions:
   3AZDeployment: !Not [!Equals [!Ref PrivateSubnet3ID, ""]]
   2AZDeployment: !Or
     - !Not [!Equals [!Ref PrivateSubnet2ID, ""]]
     - !Not [!Equals [!Ref PrivateSubnet3ID, ""]]
-
 Resources:
   EFSFileSystem:
     Type: AWS::EFS::FileSystem
@@ -56,19 +56,109 @@ Resources:
       FileSystemId: !Ref EFSFileSystem
       SecurityGroups: [ !Ref InitialNodeGroupSecurityGroup ]
       SubnetId: !Ref PrivateSubnet3ID
-  EFSProvisioner:
-    Type: "AWSQS::Kubernetes::Helm"
+  EfsCsiDriverRole:
+    Type: AWS::IAM::Role
+    Metadata: { cfn-lint: { config: { ignore_checks: ["EIAMPolicyWildcardResource"] } } }
     Properties:
+      Path: '/'
+      AssumeRolePolicyDocument: !Sub
+        - |
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Principal": {
+                  "Federated": "arn:${AWS::Partition}:iam::${AWS::AccountId}:oidc-provider/${Issuer}"
+                },
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Condition": {
+                  "StringEquals": {
+                    "${Issuer}:sub": "system:serviceaccount:kube-system:efs-csi-controller-sa"
+                  }
+                }
+              }
+            ]
+          }
+        - Issuer: !Ref OIDCIssuer
+      Policies:
+        - PolicyName: AmazonEKS_EFS_CSI_Driver_Policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - elasticfilesystem:DescribeAccessPoints
+                  - elasticfilesystem:DescribeFileSystems
+                  - elasticfilesystem:DescribeMountTargets
+                  - ec2:DescribeAvailabilityZones
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - elasticfilesystem:CreateAccessPoint
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    aws:RequestTag/efs.csi.aws.com/cluster: "true"
+              - Effect: Allow
+                Action:
+                  - elasticfilesystem:DeleteAccessPoint
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    aws:RequestTag/efs.csi.aws.com/cluster: "true"
+  EfsCsiServiceAccount:
+    Type: AWSQS::Kubernetes::Resource
+    DependsOn: EFSFileSystem
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      Namespace: "kube-system"
+      Manifest: !Sub
+        - |
+          apiVersion: v1
+          kind: ServiceAccount
+          metadata:
+            labels:
+              app.kubernetes.io/name: aws-efs-csi-driver
+            name: efs-csi-controller-sa
+            namespace: kube-system
+            annotations:
+              eks.amazonaws.com/role-arn: ${Role}
+        - Role: !GetAtt EfsCsiDriverRole.Arn
+  EfsCsiDriverHelm:
+    Type: AWSQS::Kubernetes::Helm
+    DependsOn: EfsCsiServiceAccount
+    Properties:
+      Name: "aws-efs-csi-driver"
+      Namespace: "kube-system"
+      Repository: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+      Chart: aws-efs-csi-driver/aws-efs-csi-driver 
       ClusterID: !Ref EKSClusterName
-      Chart: stable/efs-provisioner
-      Name: efs-provisioner
-      Values:
-        efsProvisioner.efsFileSystemId: !Ref EFSFileSystem
-        efsProvisioner.awsRegion: !Ref "AWS::Region"
-        efsProvisioner.provisionerName: aws-quickstart/aws-efs
-        efsProvisioner.storageClass.name: aws-efs
-        nodeSelector.partition: controllers
-
+      ValueYaml: !Sub |
+          image:
+            repository: 602401143452.dkr.ecr.${AWS::Region}.amazonaws.com/eks/aws-efs-csi-driver
+          controller:
+            serviceAccount:
+              create: false
+              name: efs-csi-controller-sa
+  EFSProvisioner:
+    Type: AWSQS::Kubernetes::Resource
+    DependsOn: EfsCsiDriverHelm
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      Namespace: "default"
+      Manifest: !Sub
+        - |
+          apiVersion: storage.k8s.io/v1
+          kind: StorageClass
+          metadata:
+            name: aws-efs
+          provisioner: efs.csi.aws.com
+          parameters:
+            provisioningMode: efs-ap
+            fileSystemId: ${EfsId}
+            directoryPerms: "700"
+        - EfsId: !Ref EFSFileSystem
 Outputs:
   EFSFileSystemID:
     Description: EFS file system ID
