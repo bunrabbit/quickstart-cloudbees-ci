@@ -1,8 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Deploys CloudBees CI into an existing Kubernetes cluster (qs-1pipqrqje)
-
 Metadata: { cfn-lint: { config: { ignore_checks: [E3001,E1019] } } }
-
 Parameters:
   EKSClusterName:
     Type: String
@@ -11,24 +9,42 @@ Parameters:
   ValueOverrideURL:
     Default: ''
     Type: String
-
 Conditions:
   ValueOverrideURLExists: !Not [!Equals [ !Ref ValueOverrideURL, '' ]]
-
+Mappings:
+  CloudBees:
+    CI: { Namespace: 'cloudbees-core' }
 Resources:
+  CloudBeesNamespace:
+    Type: AWSQS::Kubernetes::Resource
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      Namespace: 'default'
+      Manifest: !Sub 
+        - |
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: ${Namespace}
+        - Namespace: !FindInMap [CloudBees, CI, Namespace]
+          
   CloudBeesCI:
     Type: "AWSQS::Kubernetes::Helm"
+    DependsOn: CloudBeesNamespace
     Properties:
       ClusterID: !Ref EKSClusterName
-      Repository: https://charts.cloudbees.com/public/cloudbees
+      Repository: https://public-charts.artifacts.cloudbees.com/repository/public/
       Chart: cloudbees/cloudbees-core
       #Version: 3.16.1+a3fdb4ae4e87 # uncomment to use something other than latest
       Name: cloudbees-ci
+      Namespace: !FindInMap [CloudBees, CI, Namespace]
       ValueYaml: !Sub |
-        ingress-nginx:
-          Enabled: true
         OperationsCenter:
           Platform: eks
+          Ingress:
+            Class: alb
+            Annotations:
+              alb.ingress.kubernetes.io/scheme: internet-facing
           ExtraConfigMaps:
           - name: cloudbees-referrer
             labels:
@@ -58,13 +74,14 @@ Resources:
         - ValueOverrideURLExists
         - !Ref ValueOverrideURL
         - !Ref AWS::NoValue
+
   CloudBeesCIURL:
     DependsOn: CloudBeesCI
     Type: "AWSQS::Kubernetes::Get"
     Properties:
       ClusterName: !Ref EKSClusterName
-      Namespace: default
-      Name: 'service/cloudbees-ci-ingress-nginx-controller'
+      Namespace: !FindInMap [CloudBees, CI, Namespace]
+      Name: 'ingress/cjoc'
       JsonPath: '{.status.loadBalancer.ingress[0].hostname}'
 
 Outputs:
