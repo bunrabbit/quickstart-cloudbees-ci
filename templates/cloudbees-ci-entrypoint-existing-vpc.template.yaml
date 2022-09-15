@@ -1,6 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Deploys an EKS cluster with CloudBees CI into an existing VPC (qs-1pipqrqia)
-
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -120,7 +119,6 @@ Metadata:
         default: Quick Start S3 key prefix
       QSS3BucketRegion:
         default: Quick Start S3 bucket region
-
 Parameters:
   KeyPairName:
     Description: The name of an existing public/private key pair, which allows you
@@ -255,8 +253,8 @@ Parameters:
     Description: Custom AMI ID for Amazon EKS worker nodes.
   KubernetesVersion:
     Type: String
-    AllowedValues: [ "1.15", "1.16", "1.17", "1.18" ]
-    Default: "1.18"
+    AllowedValues: [ "1.19", "1.20", "1.21", "1.22", "1.23" ]
+    Default: "1.22"
     Description: The Kubernetes control plane version.
   StorageClassName:
     Type: String
@@ -339,7 +337,6 @@ Rules:
              - ap-south-1
              - ca-central-1
           - !Ref 'AWS::Region'
-
 Conditions:
   3AZDeployment: !Not [!Equals [!Ref PrivateSubnet3ID, ""]]
   2AZDeployment: !Or
@@ -347,7 +344,6 @@ Conditions:
     - !Not [!Equals [!Ref PrivateSubnet3ID, ""]]
   EFSCondition: !Equals [!Ref 'StorageClassName', 'aws-efs']
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
-
 Resources:
   AdvancedEKSConfigStack:
     Type: AWS::CloudFormation::Stack
@@ -434,6 +430,7 @@ Resources:
   EFSStack:
     Condition: EFSCondition
     Type: AWS::CloudFormation::Stack
+    DependsOn: EKSStack
     Properties:
       TemplateURL: !Sub
         - 'https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/cloudbees-ci-efs.template.yaml'
@@ -446,8 +443,10 @@ Resources:
         PrivateSubnet2ID: !Ref PrivateSubnet2ID
         PrivateSubnet3ID: !Ref PrivateSubnet3ID
         ProvisionedThroughputInMibps: !Ref ProvisionedThroughputInMibps
+        OIDCIssuer: !Select [1, !Split ["//", !GetAtt EKSStack.Outputs.OIDCIssuerURL]]
   CloudBeesCIStack:
     Type: AWS::CloudFormation::Stack
+    DependsOn: AdditionalAgentNodesStack
     Properties:
       TemplateURL: !Sub
         - 'https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/cloudbees-ci-workload.template.yaml'
@@ -457,7 +456,6 @@ Resources:
         EKSClusterName: !GetAtt EKSStack.Outputs.EKSClusterName
         StorageClassName: !Ref StorageClassName
         ValueOverrideURL: !Ref ValueOverrideURL
-
 Outputs:
   CloudBeesCIURL:
     Value: !GetAtt CloudBeesCIStack.Outputs.CloudBeesCIURL
