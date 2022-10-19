@@ -1,0 +1,21 @@
+# taskcat CLI
+taskcat_outputs/
+alchemist
+taskcat
+.taskcat/
+.taskcat_overrides.yml
+
+# IDE
+.vscode
+.idea
+quickstart-cloudbees-ci.iml
+
+# Python (pyenv / pyenv-virtualenv)
+.python-version
+venv/
+
+# QS packages
+lambda.zip
+awsqs-eks-cluster.zip
+awsqs-kubernetes-helm.zip
+awsqs_kubernetes*
