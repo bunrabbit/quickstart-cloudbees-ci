@@ -3,3 +3,55 @@ This guide covers the information you need to deploy the {partner-product-name} 
 // For advanced information about the product, troubleshooting, or additional functionality, refer to the https://{partner-solution-github-org}.github.io/{partner-solution-project-name}/operational/index.html[Operational Guide^].
 
 // For information about using this Partner Solution for migrations, refer to the https://{partner-solution-github-org}.github.io/{partner-solution-project-name}/migration/index.html[Migration Guide^].
+
+
+Overview
+CloudBees CI offers a modern continuous integration and continuous delivery (CI/CD) 
+solution based on Jenkins. Available on AWS, CloudBees CI can run and scale on 
+Kubernetes platforms, like Amazon Elastic Kubernetes Service (Amazon EKS). CloudBees 
+CI includes Operations Center, which enables administrators to quickly provision Managed 
+Masters for each development team. Each Managed Master has the Kubernetes plugin preinstalled, so it can use Kubernetes to launch agent pods that run CI/CD workloads.
+Amazon Web Services – CloudBees CI on the AWS Cloud June 2020
+Page 3 of 28
+This Quick Start provides a turnkey installation of CloudBees CI on Amazon EKS and
+demonstrates architectural best practices like automatic scaling, segregation of agent 
+workloads, and Kubernetes-native integration with Amazon Elastic Compute Cloud 
+(Amazon EC2) Spot Instances. This integration is achieved by dividing the Amazon EKS 
+cluster into three partitions:
+ The first partition runs Operations Center and Managed Masters on EC2 on-demand 
+instances.
+ The second partition runs regular agents on EC2 on-demand instances.
+ The third partition runs Spot agents on EC2 Spot Instances.
+Each partition resides in its own Amazon EC2 Auto Scaling group to scale independently of 
+other partitions. The Spot partition uses an Auto Scaling group with multiple instance types
+to support a more diversified Spot fleet, which increases Spot Instance availability and 
+uptime. Although Spot Instance requests are not guaranteed and in-use Spot Instances may 
+be reclaimed abruptly, running certain CI/CD workloads on Spot Instances can save up to 
+50–90 percent on compute costs.
+Note: This reference deployment uses the Amazon EKS Quick Start as a foundation 
+to provide a fully managed, highly available, and certified Kubernetes-conformant
+control plane for CloudBees CI.
+Please know that we may share who uses AWS Quick Starts with the AWS Partner Network 
+(APN) Partner that collaborated with AWS on the content of the Quick Start.
+CloudBees CI on AWS
+After you deploy this Quick Start, you can integrate CloudBees CI more deeply with AWS by 
+using plugins. For more information, search for AWS and Amazon in the Jenkins Plugins
+Index. For CloudBees CI examples, refer to the Getting started with CloudBees CI section in 
+this guide.
+Cost and licenses
+You are responsible for the cost of the AWS services used while running this Quick Start 
+reference deployment. There is no additional cost for using the Quick Start.
+The AWS CloudFormation template for this Quick Start includes customizable 
+configuration parameters. Some of these settings, such as instance type, affect the cost of 
+Amazon Web Services – CloudBees CI on the AWS Cloud June 2020
+Page 4 of 28
+deployment. For cost estimates, see the pricing pages for each AWS service you use. Prices 
+are subject to change.
+Tip: After you deploy the Quick Start, enable the AWS Cost and Usage Report to 
+track costs associated with the Quick Start. This report delivers billing metrics to an 
+Amazon Simple Storage Service (Amazon S3) bucket in your account and provides 
+cost estimates based on usage throughout each month and finalizes the data at the 
+end of the month. For more information, see the AWS documentation.
+After you deploy the Quick Start, you can request a free, 15-day trial license for CloudBees 
+by choosing Request a trial license in the CloudBees CI Cloud Operations Center. For 
+purchasing information, submit a pricing request through the CloudBees website.
