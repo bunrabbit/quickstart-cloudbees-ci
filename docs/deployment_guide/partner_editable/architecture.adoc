@@ -3,7 +3,7 @@
 # Architecture
 Deploying this Partner Solution for a new virtual private cloud (VPC) with default parameters builds the following CloudBees CI environment in the AWS Cloud.
 
-![Partner Solution architecture for CloudBees CI on AWS](https://d1.awsstatic.com/partner-network/QuickStart/datasheets/cloudbees-core-architecture-on-aws.f458a95880735d9329884e9ea2673c85a56abd9b.png)
+//![Partner Solution architecture for CloudBees CI on AWS](https://d1.awsstatic.com/partner-network/QuickStart/datasheets/cloudbees-core-architecture-on-aws.f458a95880735d9329884e9ea2673c85a56abd9b.png)
 
 As shown in <<Figure 1>>, the Partner Solution sets up the following:
 
@@ -30,4 +30,12 @@ storage options section.
 ## Helm
 > **Note**
 > In March 2020, the Quick Start was updated to use https://helm.sh/[Helm^] as the means to install CloudBees CI into Amazon EKS. The use of Helm provides greater compatibility with AWS CloudFormation and reduced code maintenance. The manifests are now encapsulated by the CloudBees CI Helm chart, and the Partner Solution points to a version of the Helm chart, which is released by CloudBees.
+
+The CloudBees CI Helm chart has a `values.yaml` file, which supports several configuration 
+options (values). For example, the `OperationsCenter.HostName` value gives Operations Center a user-friendly Domain Name System (DNS) name, like `cloudbees-ci.example.com`, instead of using the default Load Balancer URL. Since everyone who uses this value has a different DNS name, it must be configurable using AWS CloudFormation. While it is possible to expose every Helm value as an AWS CloudFormation parameter, it would be difficult to maintain, so CloudBees contributed a new feature, the `CustomValueYaml` property, to the https://aws.amazon.com/quickstart/architecture/amazon-eks/[Amazon EKS Partner Solution framework^].
+
+The Helm values found under `ValueYaml` in the https://github.com/aws-quickstart/quickstart-cloudbees-core/blob/master/templates/cloudbees-core-workload.template.yaml[workload template^] are internal Helm values. These are defaults that are safe to include in AWS CloudFormation templates because they apply to every installation and users don’t need to modify them. CloudBees added (in collaboration with AWS) the `CustomValueYaml` property. This property is exposed to end users as an AWS CloudFormation parameter, and it expects an Amazon S3 or HTTP URL that contains custom Helm values in the regular https://github.com/aws-quickstart/quickstart-cloudbees-core/blob/master/examples/customValues.yaml[`values.yaml`^] format. Custom Helm values are merged with internal Helm values during Helm operations such as `install` and `upgrade`, which are executed by AWS Lambda when the Partner Solution is installed or upgraded. The `CustomValueYaml` feature allows users to maintain Helm customizations
+separate from the Partner Solution by using a single AWS CloudFormation parameter.
+
+
 
