@@ -2,9 +2,7 @@
 
 Deploying this Partner Solution for a new virtual private cloud (VPC) with default parameters builds the following CloudBees CI environment in the AWS Cloud.
 
-
-Partner Solution architecture for CloudBees CI on AWS
-(https://github.com/ikurtz/quickstart-cloudbees-ci/blob/doc-edits/docs/images/cloudbees-ci-aws-eks-arch.png)[CloudBees CI in AWS EKS^]
+(https://github.com/ikurtz/quickstart-cloudbees-ci/blob/doc-edits/docs/images/cloudbees-ci-aws-eks-arch.png)![CloudBees CI in AWS EKS]
 
 As shown in <<architecture1>>, this Partner Solution sets up the following:
 
