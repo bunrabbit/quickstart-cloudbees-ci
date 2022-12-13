@@ -5,7 +5,7 @@ This guide covers the information you need to deploy the {partner-product-name} 
 // For information about using this Partner Solution for migrations, refer to the https://{partner-solution-github-org}.github.io/{partner-solution-project-name}/migration/index.html[Migration Guide^].
 
 
-# H1 Overview
+# Overview
 CloudBees CI offers a modern continuous integration and continuous delivery (CI/CD) 
 solution based on Jenkins. Available on AWS, CloudBees CI can run and scale on Kubernetes platforms, like Amazon Elastic Kubernetes Service (Amazon EKS). CloudBees CI includes Operations Center, which enables administrators to quickly provision Managed Masters for each development team. Each Managed Master has the Kubernetes plugin preinstalled, so it can use Kubernetes to launch agent pods that run CI/CD workloads.
 
@@ -27,11 +27,11 @@ control plane for CloudBees CI.
 Please know that we may share who uses AWS Quick Starts with the AWS Partner Network 
 (APN) Partner that collaborated with AWS on the content of the Quick Start.
 
-## H2 CloudBees CI on AWS
+## CloudBees CI on AWS
 After you deploy this Quick Start, you can integrate CloudBees CI more deeply with AWS by 
 using plugins. For more information, search for AWS and Amazon in the Jenkins Plugins Index. For CloudBees CI examples, refer to the Getting started with CloudBees CI section in this guide.
 
-## H2 Cost and licenses
+## Cost and licenses
 You are responsible for the cost of the AWS services used while running this Quick Start 
 reference deployment. There is no additional cost for using the Quick Start.
 The AWS CloudFormation template for this Quick Start includes customizable configuration parameters. Some of these settings, such as instance type, affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you use. Prices are subject to change.
