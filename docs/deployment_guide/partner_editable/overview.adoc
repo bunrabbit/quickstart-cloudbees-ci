@@ -21,8 +21,8 @@ other partitions. The Spot partition uses an Auto Scaling group with multiple in
 to support a more diversified Spot fleet, which increases Spot Instance availability and uptime. Although Spot Instance requests are not guaranteed and in-use Spot Instances may be reclaimed abruptly, running certain CI/CD workloads on Spot Instances can save up to 50–90 percent on compute costs.
 > **Note**
 > Note: This reference deployment uses the Amazon EKS Quick Start as a foundation 
-> to provide a fully managed, highly available, and certified Kubernetes-conformant
-> control plane for CloudBees CI.
+to provide a fully managed, highly available, and certified Kubernetes-conformant
+control plane for CloudBees CI.
 
 Please know that we may share who uses AWS Quick Starts with the AWS Partner Network 
 (APN) Partner that collaborated with AWS on the content of the Quick Start.
