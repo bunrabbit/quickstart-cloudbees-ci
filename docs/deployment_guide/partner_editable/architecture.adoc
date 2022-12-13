@@ -24,4 +24,4 @@ Store (Amazon EBS) instead of Amazon EFS. For more information, see the Data
 storage options section.
 
 > **Note**
-> The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.
+> *The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.
