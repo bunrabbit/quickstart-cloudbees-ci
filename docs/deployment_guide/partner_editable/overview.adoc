@@ -31,6 +31,12 @@ Please know that we may share who uses AWS Quick Starts with the AWS Partner Net
 After you deploy this Quick Start, you can integrate CloudBees CI more deeply with AWS by 
 using plugins. For more information, search for AWS and Amazon in the Jenkins Plugins Index. For CloudBees CI examples, refer to the Getting started with CloudBees CI section in this guide.
 
+> **Note**
+> This is a note
+
+> **Warning**
+> This is a warning
+
 ## Cost and licenses
 You are responsible for the cost of the AWS services used while running this Quick Start 
 reference deployment. There is no additional cost for using the Quick Start.
