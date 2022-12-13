@@ -19,7 +19,7 @@ Each partition resides in its own https://aws.amazon.com/autoscaling/[Amazon EC2
 other partitions. The Spot partition uses an https://aws.amazon.com/blogs/aws/new-ec2-auto-scaling-groups-with-multiple-instance-types-purchase-options/[Auto Scaling group with multiple instance types^] to support a more diversified Spot fleet, which increases Spot Instance availability and uptime. Although Spot Instance requests are not guaranteed and in-use Spot Instances may be reclaimed abruptly, running certain CI/CD workloads on Spot Instances can save up to 50–90 percent on compute costs.
 
 > **Note**
-> This reference deployment uses the Amazon EKS Partner Solution as a foundation to provide a fully managed, highly available, and certified Kubernetes-conformant control plane for CloudBees CI.
+> This reference deployment uses the https://aws-quickstart.github.io/quickstart-amazon-eks/#_overview[Amazon EKS Partner Solution^] as a foundation to provide a fully managed, highly available, and certified Kubernetes-conformant control plane for CloudBees CI.
 
 Please know that we may share who uses AWS Partner Solutions with the AWS Partner Network 
 (APN) Partner that collaborated with AWS on the content of the Partner Solution.
