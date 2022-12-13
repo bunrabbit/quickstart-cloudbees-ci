@@ -4,20 +4,24 @@ Deploying this Partner Solution for a new virtual private cloud (VPC) with defau
 
 ![Partner Solution architecture for CloudBees CI on AWS](https://d1.awsstatic.com/partner-network/QuickStart/datasheets/cloudbees-core-architecture-on-aws.f458a95880735d9329884e9ea2673c85a56abd9b.png)
 
-As shown in <<Figure 1>>, this Partner Solution sets up the following:
+As shown in <<Figure 1>>, the Partner Solution sets up the following:
 
-* A highly available architecture that spans two Availability Zones.*
-* A virtual private cloud (VPC) configured with public and private subnets, according to AWS
-best practices, to provide you with your own virtual network on AWS.*
+* A highly available architecture that spans three Availability Zones.*
+* A VPC configured with three public and three private subnets (one public and one 
+private subnet in each Availability Zone).*
 * In the public subnets:
-** Managed network address translation (NAT) gateways to allow outbound
-internet access for resources in the private subnets.*
-** A Linux bastion host in an Auto Scaling group to allow inbound Secure
-Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in public and private subnets.*
-* In the private subnets:
-** <item>.
-** <item>.
-// Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
-* <describe any additional components>.
+** Managed NAT gateways to allow outbound internet access for resources in the private subnets.*
+** A Linux bastion host in an Auto Scaling group, to allow inbound Secure Shell (SSH) access to the Amazon EKS nodes in the private subnets.*
+* In the private subnets, the following Amazon EKS nodes in Auto Scaling groups:
+** Three CloudBees CI master nodes.
+** Three CloudBees CI regular agent nodes.
+** Three CloudBees CI Spot agent nodes. These nodes are in an Auto Scaling group that is configured for multiple instance types.
+* Helm and kubectl installed and configured on the bastion host.
+* CloudBees CI installed on Amazon EKS as a Kubernetes StatefulSet.
+* An Amazon Elastic File System (Amazon EFS) file system and efs-provisioner for 
+Multi-AZ file storage. You can configure the Quick Start to use Amazon Elastic Block 
+Store (Amazon EBS) instead of Amazon EFS. For more information, see the Data 
+storage options section.
 
-[.small]#* The template that deploys this Partner Solution into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.#
+> **Note**
+> The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.
