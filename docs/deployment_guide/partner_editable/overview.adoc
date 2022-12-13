@@ -34,12 +34,9 @@ using plugins. For more information, search for AWS and Amazon in the Jenkins Pl
 You are responsible for the cost of the AWS services used while running this Quick Start 
 reference deployment. There is no additional cost for using the Quick Start.
 The AWS CloudFormation template for this Quick Start includes customizable configuration parameters. Some of these settings, such as instance type, affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you use. Prices are subject to change.
-**Note**
-> Tip: After you deploy the Quick Start, enable the AWS Cost and Usage Report to 
-track costs associated with the Quick Start. This report delivers billing metrics to an 
-Amazon Simple Storage Service (Amazon S3) bucket in your account and provides 
-cost estimates based on usage throughout each month and finalizes the data at the 
-end of the month. For more information, see the AWS documentation.
+
+> **Note**
+> Tip: After you deploy the Quick Start, enable the AWS Cost and Usage Report to track costs associated with the Quick Start. This report delivers billing metrics to an Amazon Simple Storage Service (Amazon S3) bucket in your account and provides cost estimates based on usage throughout each month and finalizes the data at the end of the month. For more information, see the AWS documentation.
 
 After you deploy the Quick Start, you can request a free, 15-day trial license for CloudBees 
 by choosing Request a trial license in the CloudBees CI Cloud Operations Center. For 
