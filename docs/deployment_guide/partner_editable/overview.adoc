@@ -6,10 +6,7 @@ This guide covers the information you need to deploy the {partner-product-name} 
 
 
 # Overview
-
-[CloudBees CI][https://docs.cloudbees.com/docs/cloudbees-ci/latest/]
-
-offers a modern continuous integration and continuous delivery (CI/CD) 
+[CloudBees CI][https://docs.cloudbees.com/docs/cloudbees-ci/latest/] offers a modern continuous integration and continuous delivery (CI/CD) 
 solution based on Jenkins. Available on AWS, CloudBees CI can run and scale on Kubernetes platforms, like Amazon Elastic Kubernetes Service (Amazon EKS). CloudBees CI includes Operations Center, which enables administrators to quickly provision Managed Controllers for each development team. Each Managed Controller has the Kubernetes plugin pre-installed, so it can use Kubernetes to launch agent pods that run CI/CD workloads.
 
 This Quick Start provides a turnkey installation of CloudBees CI on Amazon EKS and demonstrates architectural best practices like automatic scaling, segregation of agent workloads, and Kubernetes-native integration with Amazon Elastic Compute Cloud (Amazon EC2) Spot Instances. This integration is achieved by dividing the Amazon EKS cluster into three partitions:
