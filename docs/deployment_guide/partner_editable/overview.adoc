@@ -1,4 +1,4 @@
-This guide covers the information you need to deploy the {partner-product-name} Partner Solution in the AWS Cloud.
+This guide covers the information you need to deploy the CloudBees CI Partner Solution in the AWS Cloud.
 
 // For advanced information about the product, troubleshooting, or additional functionality, refer to the https://{partner-solution-github-org}.github.io/{partner-solution-project-name}/operational/index.html[Operational Guide^].
 
@@ -22,23 +22,20 @@ other partitions. The Spot partition uses an Auto Scaling group with multiple in
 to support a more diversified Spot fleet, which increases Spot Instance availability and uptime. Although Spot Instance requests are not guaranteed and in-use Spot Instances may be reclaimed abruptly, running certain CI/CD workloads on Spot Instances can save up to 50–90 percent on compute costs.
 
 > **Note**
-> This reference deployment uses the Amazon EKS Quick Start as a foundation to provide a fully managed, highly available, and certified Kubernetes-conformant control plane for CloudBees CI.
+> This reference deployment uses the Amazon EKS Partner Solution as a foundation to provide a fully managed, highly available, and certified Kubernetes-conformant control plane for CloudBees CI.
 
-Please know that we may share who uses AWS Quick Starts with the AWS Partner Network 
-(APN) Partner that collaborated with AWS on the content of the Quick Start.
+Please know that we may share who uses AWS Partner Solutions with the AWS Partner Network 
+(APN) Partner that collaborated with AWS on the content of the Partner Solution.
 
 ## CloudBees CI on AWS
 After you deploy this Quick Start, you can integrate CloudBees CI more deeply with AWS by 
 using plugins. For more information, search for AWS and Amazon in the Jenkins Plugins Index. For CloudBees CI examples, refer to the Getting started with CloudBees CI section in this guide.
 
 ## Cost and licenses
-You are responsible for the cost of the AWS services used while running this Quick Start 
-reference deployment. There is no additional cost for using the Quick Start.
+You are responsible for the cost of the AWS services used while running this Partner Solution reference deployment. There is no additional cost for using the Partner Solution.
 The AWS CloudFormation template for this Quick Start includes customizable configuration parameters. Some of these settings, such as instance type, affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you use. Prices are subject to change.
 
 > **Note**
 > Tip: After you deploy the Quick Start, enable the AWS Cost and Usage Report to track costs associated with the Quick Start. This report delivers billing metrics to an Amazon Simple Storage Service (Amazon S3) bucket in your account and provides cost estimates based on usage throughout each month and finalizes the data at the end of the month. For more information, see the AWS documentation.
 
-After you deploy the Quick Start, you can request a free, 15-day trial license for CloudBees 
-by choosing Request a trial license in the CloudBees CI Cloud Operations Center. For 
-purchasing information, submit a pricing request through the CloudBees website.
+After you deploy the Quick Start, you can request a free, 15-day trial license for CloudBees by choosing Request a trial license in the CloudBees CI Cloud Operations Center. For purchasing information, submit a pricing request through the CloudBees website.
