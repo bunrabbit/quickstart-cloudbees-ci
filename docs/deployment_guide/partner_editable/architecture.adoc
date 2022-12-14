@@ -37,5 +37,9 @@ options (values). For example, the `OperationsCenter.HostName` value gives Opera
 The Helm values found under `ValueYaml` in the https://github.com/aws-quickstart/quickstart-cloudbees-core/blob/master/templates/cloudbees-core-workload.template.yaml[workload template^] are internal Helm values. These are defaults that are safe to include in AWS CloudFormation templates because they apply to every installation and users don’t need to modify them. CloudBees added (in collaboration with AWS) the `CustomValueYaml` property. This property is exposed to end users as an AWS CloudFormation parameter, and it expects an Amazon S3 or HTTP URL that contains custom Helm values in the regular https://github.com/aws-quickstart/quickstart-cloudbees-core/blob/master/examples/customValues.yaml[`values.yaml`^] format. Custom Helm values are merged with internal Helm values during Helm operations such as `install` and `upgrade`, which are executed by AWS Lambda when the Partner Solution is installed or upgraded. The `CustomValueYaml` feature allows users to maintain Helm customizations
 separate from the Partner Solution by using a single AWS CloudFormation parameter.
 
+## Automatic Scaling
+The Partner Solution places all Amazon EKS nodes in Auto Scaling groups, but it doesn’t install the Kubernetes Cluster Autoscaler by default. The https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler[Cluster Autoscaler^] provides automatic scale-up and scale-down by allowing Kubernetes to modify the Amazon EC2 Auto Scaling groups. For example, scale-up occurs when a pod is launched but Kubernetes finds that there is insufficient CPU or memory to run the pod. You can install the Cluster Autoscaler 
+manually after you deploy the Partner Solution. You can also scale your instances up and down manually by modifying the **Desired Capacity** and **Max** for each node group in the https://console.aws.amazon.com/ec2/[Amazon EC2 console^].
+
 
 
