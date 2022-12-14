@@ -45,7 +45,7 @@ manually after you deploy the Partner Solution. You can also scale your instance
 The Spot agents partition uses an Auto Scaling group that allows multiple Amazon EC2 instance types to be launched into the same group. This makes it possible to create a diversified pool of Spot Instances without additional configuration. Due to limitations with the Cluster Autoscaler at the time of this writing, we recommend using Spot Instances of the same CPU and memory in the Spot partition. The default instance types are `m4.large`, 
 `m5.large`, `m5a.large`, and `m5d.large`. Each instance type has 2 CPUs and 8 GiB of memory. Agent pods that run on the Spot agents partition are terminated and disconnected from a Managed Controller when a Spot Instance is reclaimed; they are not recovered or restarted automatically.
 
-> **Note**
+> **Important**
 > Important: We strongly recommend running mission-critical workloads on the regular agents partition.
 
 Currently, Spot interruption events can be identified by the following:
