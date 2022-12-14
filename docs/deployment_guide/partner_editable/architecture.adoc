@@ -41,5 +41,26 @@ separate from the Partner Solution by using a single AWS CloudFormation paramete
 The Partner Solution places all Amazon EKS nodes in Auto Scaling groups, but it doesn’t install the Kubernetes Cluster Autoscaler by default. The https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler[Cluster Autoscaler^] provides automatic scale-up and scale-down by allowing Kubernetes to modify the Amazon EC2 Auto Scaling groups. For example, scale-up occurs when a pod is launched but Kubernetes finds that there is insufficient CPU or memory to run the pod. You can install the Cluster Autoscaler 
 manually after you deploy the Partner Solution. You can also scale your instances up and down manually by modifying the **Desired Capacity** and **Max** for each node group in the https://console.aws.amazon.com/ec2/[Amazon EC2 console^].
 
+## Spot integration
+The Spot agents partition uses an Auto Scaling group that allows multiple Amazon EC2 instance types to be launched into the same group. This makes it possible to create a diversified pool of Spot Instances without additional configuration. Due to limitations with the Cluster Autoscaler at the time of this writing, we recommend using Spot Instances of the same CPU and memory in the Spot partition. The default instance types are `m4.large`, 
+`m5.large`, `m5a.large`, and `m5d.large`. Each instance type has 2 CPUs and 8 GiB of memory. Agent pods that run on the Spot agents partition are terminated and disconnected from a Managed Controller when a Spot Instance is reclaimed; they are not recovered or restarted automatically.
+
+> **Note**
+> Important: We strongly recommend running mission-critical workloads on the regular agents partition.
+
+Currently, Spot interruption events can be identified by the following:
+* The agent appears offline in the user interface and is removed automatically thereafter.
+* The build ends with a status of `ABORTED`.
+* The build log contains the following messages:
+** `Cannot contact agentName: java.lang.InterruptedException`
+** `Agent agentName was deleted; canceling node body`
+** `Could not connect to agentName to send interrupt signal to process`
+** `Agent was removed`
+If you experience different behavior, we recommend upgrading your `kubernetes` and `durable-task` plugins to the latest versions.
+
+## Agent segregation
+CloudBees CI uses the https://wiki.jenkins.io/display/JENKINS/Kubernetes+Plugin[Kubernetes plugin^] to launch agent pods that process CI/CD workloads, such as building, testing, and deploying an application. Due to the spiky and resource-intensive nature of agents, Masters and Agents should be scaled independently of each other.
+The Quick Start achieves independent scaling with a combination of Auto Scaling groups and Kubernetes https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/[labels^] and https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/[taints^]. The use of Auto Scaling groups was covered earlier in this guide. Labels are used to identify each Kubernetes node. For example, each master node is labeled with `partition=masters`, and each Spot agents node is labeled with `partition=spot-agents`. Taints are used for anti-affinity and are applied only to the agent pools. When a Managed Controller is launched with default settings in Operations Center, the Managed Controller is always scheduled onto a master node, where there are no taints. Agent pods run in the master node pool by default, but can run either on the regular agents or on the Spot agents node pool via configuration settings, as covered in the **Targeting agent pools from a pipeline section**.
+
 
 
