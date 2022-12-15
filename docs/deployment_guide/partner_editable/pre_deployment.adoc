@@ -21,7 +21,7 @@ following table. Otherwise, deployment might fail.
 
 [cols="1,1"]
 |===
-|Area, |Requirement
+|Area |Requirement
 
 |Resources
 |If necessary, request https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/[service quota increases^] for the following resources. You might do this if an existing deployment uses these resources and you exceed the default quotas with this deployment. The https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/[Service Quotas console^] displays your usage and quotas for some aspects of some services. For more information, see the https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html[AWS documentation^].
