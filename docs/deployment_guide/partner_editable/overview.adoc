@@ -15,7 +15,8 @@ This Quick Start provides a turnkey installation of CloudBees CI on Amazon EKS a
 - The second partition runs regular agents on EC2 on-demand instances.
 
 Each partition resides in its own https://aws.amazon.com/autoscaling/[Amazon EC2 Auto Scaling^] group to scale independently of 
-other partitions. 
+other partitions.
+
 > **Note**
 > For advanced use cases with the intent on testing spiky workloads, a third partition can be provisioned to run Spot agents on EC2 Spot instances. The Spot partition uses an https://aws.amazon.com/blogs/aws/new-ec2-auto-scaling-groups-with-multiple-instance-types-purchase-options/[Auto Scaling group with multiple instance types^] to support a more diversified Spot fleet, which increases Spot Instance availability and uptime. Although Spot Instance requests are not guaranteed and in-use Spot Instances may be reclaimed abruptly, running certain CI/CD workloads on Spot Instances can save up to 50–90 percent on compute costs.
 
