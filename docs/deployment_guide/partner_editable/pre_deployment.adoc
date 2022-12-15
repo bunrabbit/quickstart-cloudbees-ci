@@ -43,38 +43,38 @@ that you create a new key pair instead of specifying a key pair that’s already
 | To deploy the Partner Solution, you must log in to the AWS Management Console with IAM 
 permissions for the resources and actions the templates deploy. The AdministratorAccess managed policy within IAM provides sufficient permissions, although your organization may use a custom policy with more restrictions.
 
+|===
+
 [cols="2,1"]
-!===
-! Resource ! This Deployment Uses
+|===
+| Resource | This Deployment Uses
 
-! **VPCs**
-! 1
+| **VPCs**
+| 1
 
-! **Elastic IP addresses**
-! 4
+| **Elastic IP addresses**
+| 4
 
-! **Security groups**
-! 9
+| **Security groups**
+| 9
 
-! **IAM Roles**
-! 13
+| **IAM Roles**
+| 13
 
-! **Auto Scaling groups**
-! 4
+| **Auto Scaling groups**
+| 4
 
-! **ELB load balancers**
-! 1
+| **ELB load balancers**
+| 1
 
-! **r5.xlarge instances**
-! 3
+| **r5.xlarge instances**
+| 3
 
-! **m5.large instances**
-! 3
+| **m5.large instances**
+| 3
 
-! **t2.micro instances**
-! 1
-
-!===
+| **t2.micro instances**
+| 1
 
 |===
 
