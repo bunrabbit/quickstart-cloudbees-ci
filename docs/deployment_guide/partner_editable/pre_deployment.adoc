@@ -1,3 +1,20 @@
 //Include any predeployment steps here, such as signing up for a Marketplace AMI or making any changes to a partner account. If there are no predeployment steps, leave this file empty.
 
-== Predeployment steps
+# Planning the Deployment
+
+## Specialized Knowledge
+This Partner Solution assumes familiarity with containers and Kubernetes. It also requires a 
+moderate level of familiarity with AWS services. If you’re new to AWS, visit the https://aws.amazon.com/getting-started/[Getting Started Resource Center^] and the https://aws.amazon.com/training/[AWS Training and Certification website^] for materials and programs that can help you develop the skills to design, deploy, and operate your infrastructure and applications on the AWS Cloud. For more information about AWS services used in this Quick Start, see **Additional resources**.
+
+## AWS Account
+If you don’t already have an AWS account, create one at [https://aws.amazon.com] by 
+following the on-screen instructions. Part of the sign-up process involves receiving a phone 
+call and entering a PIN using the phone keypad.
+Your AWS account is automatically signed up for all AWS services. You are charged only for the services you use.
+
+## Technical Requirements
+By default, the Quick Start creates an Elastic Load Balancing (ELB) load balancer and 
+outputs its HTTP DNS into the base CloudBees CI stack. This is how you initially access CloudBees CI (specifically, Operations Center) after you deploy the Partner Solution.
+If you have a domain name available (for example, http://cloudbees-ci.mycompany.com), you can use it with this Quick Start, but it’s not required during installation. To supply a domain name (`OperationsCenter.HostName` Helm value), refer to the custom-values feature in the Helm section. For more information, see https://docs.cloudbees.com/docs/cloudbees-core/latest/eks-install-guide/installing-eks-using-helm#install-https[Using Helm to install CloudBees CI with HTTPS support^].
+Before you launch the Quick Start, your account must be configured as specified in the 
+following table. Otherwise, deployment might fail.
