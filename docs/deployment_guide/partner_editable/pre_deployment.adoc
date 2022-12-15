@@ -63,8 +63,8 @@ https://console.aws.amazon.com/trustedadvisor/home?#/category/service-limits[AWS
 
 !===
 
-| Regions
 | This deployment includes Amazon EKS and M5a/M5d instance types, which aren’t currently supported in all AWS Regions. See the current list of supported Regions for Amazon EKS and M4 instances on the AWS website.
+| Regions
 
 | Key pair
 | Ensure that at least one Amazon EC2 key pair exists in your AWS account in the Region 
