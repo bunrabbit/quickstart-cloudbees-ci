@@ -24,5 +24,5 @@ following table. Otherwise, deployment might fail.
 |Area, |Requirement
 
 |Resources
-|If necessary, request service quota increases for the following resources. You might do this if an existing deployment uses these resources and you exceed the default quotas with this deployment. The Service Quotas console displays your usage and quotas for some aspects of some services. For more information, see the AWS documentation. AWS Trusted Advisor offers a service quotas check that displays your usage and limits for some aspects of some services.
+|If necessary, request https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/[service quota increases^] for the following resources. You might do this if an existing deployment uses these resources and you exceed the default quotas with this deployment. The https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/[Service Quotas console^] displays your usage and quotas for some aspects of some services. For more information, see the https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html[AWS documentation^]. https://console.aws.amazon.com/trustedadvisor/home?#/category/service-limits[AWS Trusted Advisor^] offers a service quotas check that displays your usage and limits for some aspects of some services.
 |===
