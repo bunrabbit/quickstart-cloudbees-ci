@@ -18,3 +18,11 @@ outputs its HTTP DNS into the base CloudBees CI stack. This is how you initially
 If you have a domain name available (for example, http://cloudbees-ci.mycompany.com), you can use it with this Quick Start, but it’s not required during installation. To supply a domain name (`OperationsCenter.HostName` Helm value), refer to the custom-values feature in the Helm section. For more information, see https://docs.cloudbees.com/docs/cloudbees-core/latest/eks-install-guide/installing-eks-using-helm#install-https[Using Helm to install CloudBees CI with HTTPS support^].
 Before you launch the Quick Start, your account must be configured as specified in the 
 following table. Otherwise, deployment might fail.
+
+[cols="1,1"]
+|===
+|Area, |Requirement
+
+|Resources
+|If necessary, request service quota increases for the following resources. You might do this if an existing deployment uses these resources and you exceed the default quotas with this deployment. The Service Quotas console displays your usage and quotas for some aspects of some services. For more information, see the AWS documentation. AWS Trusted Advisor offers a service quotas check that displays your usage and limits for some aspects of some services.
+|===
