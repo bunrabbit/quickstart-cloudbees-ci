@@ -7,7 +7,7 @@ This Partner Solution assumes familiarity with containers and Kubernetes. It als
 moderate level of familiarity with AWS services. If you’re new to AWS, visit the https://aws.amazon.com/getting-started/[Getting Started Resource Center^] and the https://aws.amazon.com/training/[AWS Training and Certification website^] for materials and programs that can help you develop the skills to design, deploy, and operate your infrastructure and applications on the AWS Cloud. For more information about AWS services used in this Quick Start, see **Additional resources**.
 
 ## AWS Account
-If you don’t already have an AWS account, create one at [https://aws.amazon.com] by 
+If you don’t already have an AWS account, create one at https://aws.amazon.com by 
 following the on-screen instructions. Part of the sign-up process involves receiving a phone 
 call and entering a PIN using the phone keypad.
 Your AWS account is automatically signed up for all AWS services. You are charged only for the services you use.
