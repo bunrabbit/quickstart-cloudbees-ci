@@ -64,18 +64,15 @@ https://console.aws.amazon.com/trustedadvisor/home?#/category/service-limits[AWS
 !===
 
 | Regions
-
 | This deployment includes Amazon EKS and M5a/M5d instance types, which aren’t currently supported in all AWS Regions. See the current list of supported Regions for Amazon EKS and M4 instances on the AWS website.
 
 | Key pair
-
 | Ensure that at least one Amazon EC2 key pair exists in your AWS account in the Region 
 where you are planning to deploy the Partner Solution. Make note of the key pair name. You are prompted for this information during deployment. To create a key pair, follow the instructions in the AWS documentation.
 If you deploy this Quick Start for testing or proof-of-concept purposes, we recommend 
 that you create a new key pair instead of specifying a key pair that’s already being used by a production instance.
 
 | IAM Permissions
-
 | To deploy the Partner Solution, you must log in to the AWS Management Console with IAM 
 permissions for the resources and actions the templates deploy. The AdministratorAccess managed policy within IAM provides sufficient permissions, although your organization may use a custom policy with more restrictions.
 
