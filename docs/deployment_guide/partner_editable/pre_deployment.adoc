@@ -79,4 +79,14 @@ permissions for the resources and actions the templates deploy. The Administrato
 |===
 
 ## Data Storage Options
+The two main components of CloudBees CI, Operations Center and Managed Masters, use a file system to persist data. Data is stored in a folder called Jenkins Home, located at /var/jenkins_home. The Quick Start offers two choices for data storage: Amazon EBS and Amazon EFS (default).
+Amazon EBS volumes are scoped to a particular Availability Zone in order to offer high-speed, low-latency access to the EC2 instances they are connected to. If an Availability Zone fails, an EBS volume becomes inaccessible due to file corruption, or there is a service outage, the data on these volumes will become inaccessible. Operations Center and Managed Controller pods require this persistent data and have no mechanism to replicate the data, so we recommend frequent backups when using Amazon EBS.
+You can use the CloudBees backup plugin to perform backups to Amazon Simple Storage Service (Amazon S3) on a custom schedule. Restoring from a backup is typically performed manually using the Operations Center user interface. In some cases, Operations Center itself must be restored. To restore Operations Center, see Restoring from the CloudBees Backup Plugin. We recommend testing the restore procedure before a real-world failure 
+occurs.
+Amazon EFS file systems are scoped to an AWS Region and can be accessed from any Availability Zone in the Region the file system was created in. Using Amazon EFS as a storage class for Operations Center and Managed Masters pods allows pods to be rescheduled successfully onto healthy nodes in the event of an Availability Zone outage. Amazon EFS file systems may increase the cost of the deployment compared to the Amazon EBS option, but provide greater fault tolerance. For more information on pricing, see the Amazon EBS pricing page and the Amazon EFS pricing page.
+Agent pods use Amazon EBS. The default volume size for agent nodes is larger than master nodes because CI/CD tasks typically generate a lot of data.
 
+> **Note**
+> Important: Monitor the size of EBS volumes to prevent them from running out of space. If an EBS volume is low on space, increase its size by following theinstructions in the AWS documentation.
+
+By default, agent pods run on managed controller nodes but can be configured otherwise. The default EBS volume size for master nodes is minimal because, assuming you choose Amazon EFS storage, Operations Center and Managed Masters do not store data on Amazon EBS. If you don’t configure agent pods to run on a separate node pool, the master nodes may quickly run out of disk space. For more information, see Targeting agent pools from a pipeline.
