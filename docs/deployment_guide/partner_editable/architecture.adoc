@@ -14,7 +14,7 @@ private subnet in each Availability Zone).*
 ** Managed NAT gateways to allow outbound internet access for resources in the private subnets.*
 ** A Linux bastion host in an Auto Scaling group, to allow inbound Secure Shell (SSH) access to the Amazon EKS nodes in the private subnets.*
 * In the private subnets, the following Amazon EKS nodes in Auto Scaling groups consist of:
-** Three CloudBees CI master nodes.
+** Three CloudBees CI controller nodes.
 ** Three CloudBees CI regular agent nodes.
 * https://helm.sh/[Helm^] and https://kubernetes.io/docs/reference/kubectl/overview/[kubectl^] installed and configured on the bastion host.
 * CloudBees CI installed on Amazon EKS as a Kubernetes StatefulSet.
@@ -54,8 +54,8 @@ Currently, Spot interruption events can be identified by the following:
 If you experience different behavior, we recommend upgrading your `kubernetes` and `durable-task` plugins to the latest versions.
 
 ## Agent segregation
-CloudBees CI uses the https://wiki.jenkins.io/display/JENKINS/Kubernetes+Plugin[Kubernetes plugin^] to launch agent pods that process CI/CD workloads, such as building, testing, and deploying an application. Due to the spiky and resource-intensive nature of agents, Masters and Agents should be scaled independently of each other.
-The Partner Solution achieves independent scaling with a combination of Auto Scaling groups and Kubernetes https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/[labels^] and https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/[taints^]. The use of Auto Scaling groups was covered earlier in this guide. Labels are used to identify each Kubernetes node. For example, each master node is labeled with `partition=masters`. Taints are used for anti-affinity and are applied only to the agent pools. When a Managed Controller is launched with default settings in Operations Center, the Managed Controller is always scheduled onto a master node, where there are no taints. Agent pods run in the master node pool by default, but can run on the regular agents node pool via configuration settings, as covered in the **Targeting agent pools from a pipeline section**.
+CloudBees CI uses the https://wiki.jenkins.io/display/JENKINS/Kubernetes+Plugin[Kubernetes plugin^] to launch agent pods that process CI/CD workloads, such as building, testing, and deploying an application. Due to the spiky and resource-intensive nature of agents, controllers and Agents should be scaled independently of each other.
+The Partner Solution achieves independent scaling with a combination of Auto Scaling groups and Kubernetes https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/[labels^] and https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/[taints^]. The use of Auto Scaling groups was covered earlier in this guide. Labels are used to identify each Kubernetes node. For example, each controller node is labeled with `partition=masters`. Taints are used for anti-affinity and are applied only to the agent pools. When a Managed Controller is launched with default settings in Operations Center, the Managed Controller is always scheduled onto a controller node, where there are no taints. Agent pods run in the master node pool by default, but can run on the regular agents node pool via configuration settings, as covered in the **Targeting agent pools from a pipeline section**.
 
 
 
