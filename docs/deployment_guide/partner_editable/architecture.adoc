@@ -44,6 +44,7 @@ manually after you deploy the Partner Solution. You can also scale your instance
 > Important: We strongly recommend running mission-critical workloads on the regular agents partition. Otherwise, please refer to the Overview section of this deployment guide to learn more about configuring a third partition for agents to run workloads on EC2 spot instances.
 
 Currently, Spot interruption events can be identified by the following:
+
 * The agent appears offline in the user interface and is removed automatically thereafter.
 * The build ends with a status of `ABORTED`.
 * The build log contains the following messages:
@@ -51,6 +52,7 @@ Currently, Spot interruption events can be identified by the following:
 ** `Agent agentName was deleted; canceling node body`
 ** `Could not connect to agentName to send interrupt signal to process`
 ** `Agent was removed`
+
 If you experience different behavior, we recommend upgrading your `kubernetes` and `durable-task` plugins to the latest versions.
 
 ## Agent segregation
