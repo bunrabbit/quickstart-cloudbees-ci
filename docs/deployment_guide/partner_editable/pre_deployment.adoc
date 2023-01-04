@@ -13,10 +13,10 @@ call and entering a PIN using the phone keypad.
 Your AWS account is automatically signed up for all AWS services. You are charged only for the services you use.
 
 ## Technical Requirements
-By default, the Quick Start creates an Elastic Load Balancing (ELB) load balancer and 
+By default, the Partner Solution creates an Elastic Load Balancing (ELB) load balancer and 
 outputs its HTTP DNS into the base CloudBees CI stack. This is how you initially access CloudBees CI (specifically, Operations Center) after you deploy the Partner Solution.
-If you have a domain name available (for example, http://cloudbees-ci.mycompany.com), you can use it with this Quick Start, but it’s not required during installation. To supply a domain name (`OperationsCenter.HostName` Helm value), refer to the custom-values feature in the Helm section. For more information, see https://docs.cloudbees.com/docs/cloudbees-core/latest/eks-install-guide/installing-eks-using-helm#install-https[Using Helm to install CloudBees CI with HTTPS support^].
-Before you launch the Quick Start, your account must be configured as specified in the 
+If you have a domain name available (for example, http://cloudbees-ci.mycompany.com), you can use it with this Partner Solution, but it’s not required during installation. To supply a domain name (`OperationsCenter.HostName` Helm value), refer to the custom-values feature in the Helm section. For more information, see https://docs.cloudbees.com/docs/cloudbees-core/latest/eks-install-guide/installing-eks-using-helm#install-https[Using Helm to install CloudBees CI with HTTPS support^].
+Before you launch the Partner Solution, your account must be configured as specified in the 
 following table. Otherwise, deployment might fail.
 
 [cols="1,1"]
@@ -36,7 +36,7 @@ https://console.aws.amazon.com/trustedadvisor/home?#/category/service-limits[AWS
 | Key pair
 | Ensure that at least one Amazon EC2 key pair exists in your AWS account in the Region 
 where you are planning to deploy the Partner Solution. Make note of the key pair name. You are prompted for this information during deployment. To create a key pair, follow the instructions in the AWS documentation.
-If you deploy this Quick Start for testing or proof-of-concept purposes, we recommend 
+If you deploy this Partner Solution for testing or proof-of-concept purposes, we recommend 
 that you create a new key pair instead of specifying a key pair that’s already being used by a production instance.
 
 | IAM Permissions
@@ -79,7 +79,7 @@ permissions for the resources and actions the templates deploy. The Administrato
 |===
 
 ## Data Storage Options
-The two main components of CloudBees CI, Operations Center and Managed Masters, use a file system to persist data. Data is stored in a folder called **Jenkins Home**, located at `/var/jenkins_home`. The Quick Start offers two choices for data storage: Amazon EBS and Amazon EFS (default).
+The two main components of CloudBees CI, Operations Center and Managed Masters, use a file system to persist data. Data is stored in a folder called **Jenkins Home**, located at `/var/jenkins_home`. The Partner Solution offers two choices for data storage: Amazon EBS and Amazon EFS (default).
 
 Amazon EBS volumes are scoped to a particular Availability Zone in order to offer high-speed, low-latency access to the EC2 instances they are connected to. If an Availability Zone fails, an EBS volume becomes inaccessible due to file corruption, or there is a service outage, the data on these volumes will become inaccessible. Operations Center and Managed Controller pods require this persistent data and have no mechanism to replicate the data, so we recommend frequent backups when using Amazon EBS.
 
